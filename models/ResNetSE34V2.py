@@ -6,7 +6,8 @@ import torchaudio
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn import Parameter
-from models.ResNetBlocks import *
+
+from .ResNetBlocks import *
 
 class PreEmphasis(torch.nn.Module):
 
@@ -31,7 +32,7 @@ class ResNetSE(nn.Module):
         super(ResNetSE, self).__init__()
 
         # print('Embedding size is %d, encoder %s.'%(nOut, encoder_type))
-        
+
         self.inplanes   = num_filters[0]
         self.encoder_type = encoder_type
         self.n_mels     = n_mels
@@ -40,7 +41,7 @@ class ResNetSE(nn.Module):
         self.conv1 = nn.Conv2d(1, num_filters[0] , kernel_size=3, stride=1, padding=1)
         self.relu = nn.ReLU(inplace=True)
         self.bn1 = nn.BatchNorm2d(num_filters[0])
-        
+
 
         self.layer1 = self._make_layer(block, num_filters[0], layers[0])
         self.layer2 = self._make_layer(block, num_filters[1], layers[1], stride=(2, 2))
